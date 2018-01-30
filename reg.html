@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Заголовок</title>
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+	<h4>Регистрация</h4>
+	<form action="" method="GET">
+		<label for="first_name">Имя:</label>
+		<div id="block_first_name">
+			<input type="text" name="first_name">
+		</div>
+		<label for="flast_name">Фамилия:</label>
+		<div>
+			<input type="text" name="last_name">
+		</div>
+		<label for="password">Пароль:</label>
+		<div>
+			<input type="password" name="password">
+		</div>
+		<label for="sex">Пол:</label>
+		<div>
+			Муж<input type="checkbox" name="sex" value="male">
+			Жен<input type="checkbox" name="sex" value="female">
+		</div>
+		<label for="smoke">Курите:</label>
+		<div>
+			Да<input type="radio" name="smoke" value="y">
+			Нет<input type="radio" name="smoke" value="n" checked>
+		</div>
+		<label for="about">О себе:</label>
+		<div>
+			<textarea name="about" rows="10"></textarea>
+		</div>
+		<label for="city">Город:</label>
+		<div>
+			<select name="city">
+				<option>Москва</option>
+				<option selected>Санкт-Петербург</option>
+			</select>
+		</div>
+		<div>
+			<button>Сохранить</button>
+		</div>
+	</form>
+
+</body>
+</html>
