@@ -1,6 +1,13 @@
 <?php
+function getFullName($user) {
+    return $user['firstname'] . ' ' . $user['lastname'];
+}
+
+
+$errorMessage=[];
 
 var_dump($_POST);
+var_dump($_GET);
 if (isset($_POST['is_agree'])) {
     $user = [
         'firstname' => $_POST['firstname'],
@@ -10,22 +17,20 @@ if (isset($_POST['is_agree'])) {
         'growth' => (float)$_POST['growth'],
         'password' => $_POST['password'],
         'stack_learn' => [],
+        'list_fruits' => 'яблоко, апельсин, груша',
     ];
-    if (isset($_POST['stack_learn'])) {
-        $user['stack_learn'] = $_POST['stack_learn'];
+    if (strlen($user['firstname']) < 3 || strlen($user['lastname']) < 3) {
+        $errorMessage[] = 'Error #1';
     }
-    if ($user['age'] > 18) {
-        echo 'Этот пользователь взрослый.';
-    } elseif ($user['age'] == 18) {
-        echo 'Этот пользователь достиг взрослого возраста.';
-    } else {
-        echo 'Этот пользователь недастаточно взрослый.';
+    if (!(in_array('html', $user['stack_learn']) && in_array('php', $user['stack_learn']))) {
+        $errorMessage[] = 'Требуется html и php';
     }
-
-    var_dump($user);
-
 }
-
+var_dump(getFullName($user));
+var_dump(in_array('html', $user['stack_learn']));
+$string = 'Hello world!';
+$result = substr($string, 6, 2);
+var_dump($result);
 
 ?>
 <!doctype html>
@@ -39,21 +44,32 @@ if (isset($_POST['is_agree'])) {
 </head>
 <body>
 
-<?php if($user['stack_learn']) { ?>
-<h3>Мы изучаем:</h3>
+<?php if ($errorMessage) {?>
+<div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    <?php foreach($errorMessage as $message) {
+            echo $message;
+        }
+     } ?>
+</div>
+
+<?php if(isset($user['list_fruits'])) {?>
+<h3>Мы едим:</h3>
 
 <ul>
-    <?php foreach ($user['stack_learn'] as $key => $lang ) { ?>
+    <?php foreach (explode(', ' , $user['list_fruits']) as $key => $lang ) { ?>
         <li><?= $lang ?></li>
     <?php } ?>
 </ul>
+<h3>Мы изучаем: <?= implode(', ' , $user['stack_learn']) ?></h3>
 <?php } ?>
 
 <div class="container-fluid jumbotron col-md-offset-4 col-md-5">
     <form action="" method="POST">
         <div class="form-group">
             <label for="firstname">Имя</label>
-            <input class="form-control" id="firstname" name="firstname" placeholder="Имя" required>
+            <input class="form-control" id="firstname" name="firstname" placeholder="Имя" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" required>
         </div>
         <div class="form-group">
             <label for="lastname">Фамилия</label>

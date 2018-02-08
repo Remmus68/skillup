@@ -5,13 +5,6 @@
     require_once('include/postlist.php');
 
     require_once('include/header.php');
-   //var_dump($postList);
-   //echo $postList[0]['user']['userpic'];
-   //foreach ($postList as $post) {
-     //  var_dump($post);
-      // echo '<br />';
-   //}
-    //var_dump($_SERVER);
 ?>
              <div class="content">
 
@@ -22,7 +15,7 @@
                     <div class="user_info">
                         <img src=<?='"' . $post['user']['userpic'] . '"'?> />
                         <div class="name"><?=$post['user']['firstname'] . ' ' . $post['user']['lastname']?></div>
-                        <div class="posted"><?=$post['date']?></div>
+                        <div class="posted"><?=$post['created_at']?></div>
                     </div>
                     <div class="foto">
                         <img src=<?='"' . $post['foto'] . '"'?> />
@@ -33,11 +26,11 @@
                             <?=$post['likes']?>
                         </div>
                         <div class="comment">
-                            <?=$post['description']?>
                             <?php
+                                echo $post['description'];
                                 if (isset($post['taglist'])) {
-                                    foreach ($post['taglist'] as $tag) {?>
-                            <a href="<?=$tag['link']?>" class="hashtag"><?='#' . $tag['name']?></a>
+                                    foreach ($post['taglist'] as $hashtag) {?>
+                            <a href="<?='?hashtag=' . $hashtag?>" class="hashtag"><?='#' . $hashtag?></a>
                             <?php
                                     }
                                 }
