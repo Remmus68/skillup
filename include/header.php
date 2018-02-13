@@ -2,7 +2,7 @@
 <html>
 	<head>
 	    <title><?= $pageTitle . ' | ' .PROJECT_NAME ?></title>
-	    <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" href="css/style.css?<?= filemtime('css/style.css') ?>" data-date="<?= date('d.m.Y H:i:s', filemtime('css/style.css')) ?>">
 	</head>
 	<body>
 	    <div class="container">

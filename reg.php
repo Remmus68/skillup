@@ -1,4 +1,34 @@
 <?php
+define ('UPLOAD_DIR', 'upload/');
+function createPath($path) {
+    $isSuccess = false;
+    if (!file_exists($path)) {
+        mkdir($path, 0777,true);
+        $isSuccess = true;
+    }
+    return $isSuccess;
+}
+//$arrResult = glob('*.txt');
+//foreach ($arrResult as $fileName) {
+//    var_dump(filesize($fileName));
+    //copy($fileName, './css/' . $fileName . '.bak');
+    //rename('./css/' . $fileName . '.bak', './css/' . $fileName);
+    //unlink('./css/' . $fileName);
+//}
+//var_dump($arrResult);
+//die();
+
+/*$h = fopen('test.txt', 'a+');
+for ($i=1; $i<=100; $i++) {
+    fwrite($h, $i. "\t" .'new string' . PHP_EOL);
+}
+fclose($h);
+die();
+
+file_put_contents('test.txt', 'Hello!');
+$result = file_get_contents('http://roma.com/');
+print_r($result);
+die();*/
 function getFullName($user) {
     return $user['firstname'] . ' ' . $user['lastname'];
 }
@@ -16,17 +46,38 @@ if (isset($_POST['is_agree'])) {
         'age' => (int)$_POST['age'],
         'growth' => (float)$_POST['growth'],
         'password' => $_POST['password'],
-        'stack_learn' => [],
+        'stack_learn' => $_POST['stack_learn'],
         'list_fruits' => 'яблоко, апельсин, груша',
     ];
     if (strlen($user['firstname']) < 3 || strlen($user['lastname']) < 3) {
         $errorMessage[] = 'Error #1';
     }
+    $jsonUser = json_encode($user, JSON_UNESCAPED_UNICODE);
+    $arrUser = json_decode($jsonUser, true);
+    $objUser = json_decode($jsonUser, false);
+    $test = serialize(12);
+    var_dump($test);
+    var_dump(unserialize($test));
+    var_dump($jsonUser);
+    var_dump($arrUser);
+    var_dump($objUser -> firstname);
+    var_dump(serialize($objUser));
+    die();
+
+//    var_dump($_FILES);
+//    die();
+    if (isset($_FILES['foto']) && empty($_FILES['foto']['error'])) {
+        $uploadPath = UPLOAD_DIR . 'foto/';
+        createPath($uploadPath);
+        move_uploaded_file($_FILES['foto']['tmp_name'], $uploadPath . $_FILES['foto']['name']);
+    }
+
     if (!(in_array('html', $user['stack_learn']) && in_array('php', $user['stack_learn']))) {
         $errorMessage[] = 'Требуется html и php';
     }
 }
 var_dump(getFullName($user));
+var_dump($user['stack_learn']);
 var_dump(in_array('html', $user['stack_learn']));
 $string = 'Hello world!';
 $result = substr($string, 6, 2);
@@ -66,7 +117,7 @@ var_dump($result);
 <?php } ?>
 
 <div class="container-fluid jumbotron col-md-offset-4 col-md-5">
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="firstname">Имя</label>
             <input class="form-control" id="firstname" name="firstname" placeholder="Имя" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" required>
@@ -78,6 +129,10 @@ var_dump($result);
         <div class="form-group">
             <label for="password" class="control-label">Пароль</label>
             <input type="password" class="form-control" name="password" id="password" placeholder="Пароль">
+        </div>
+        <div class="form-group">
+            <label for="foto" class="control-label">Фото</label>
+            <input type="file" class="form-control" name="foto" id="foto" placeholder="">
         </div>
         <div class="form-group">
             <label for="password" class="control-label">Пол:</label>
