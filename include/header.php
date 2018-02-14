@@ -1,3 +1,7 @@
+<?php
+	define('PROJECT_NAME', 'Red eyes');
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -8,7 +12,9 @@
 	    <div class="container">
 			<div class="header">
 			    <div class="logotip">
-			        <img src="image/logo.png" />
+			    	<a href="../skillup/posts.php">
+			        	<img src="image/logo.png" />
+			    	</a>
 			    </div>
 			    <div class="navigator">
 			        <ul>
@@ -22,3 +28,4 @@
 			        </form>
 			    </div>
 			</div>
+        <div class="content">
