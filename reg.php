@@ -39,6 +39,9 @@ $errorMessage=[];
 var_dump($_POST);
 var_dump($_GET);
 if (isset($_POST['is_agree'])) {
+
+//    header('Location: ./path/to/route');
+
     $user = [
         'firstname' => $_POST['firstname'],
         'lastname'=> $_POST['lastname'],
@@ -52,17 +55,17 @@ if (isset($_POST['is_agree'])) {
     if (strlen($user['firstname']) < 3 || strlen($user['lastname']) < 3) {
         $errorMessage[] = 'Error #1';
     }
-    $jsonUser = json_encode($user, JSON_UNESCAPED_UNICODE);
-    $arrUser = json_decode($jsonUser, true);
-    $objUser = json_decode($jsonUser, false);
-    $test = serialize(12);
-    var_dump($test);
-    var_dump(unserialize($test));
-    var_dump($jsonUser);
-    var_dump($arrUser);
-    var_dump($objUser -> firstname);
-    var_dump(serialize($objUser));
-    die();
+//    $jsonUser = json_encode($user, JSON_UNESCAPED_UNICODE);
+//    $arrUser = json_decode($jsonUser, true);
+//    $objUser = json_decode($jsonUser, false);
+//    $test = serialize(12);
+//    var_dump($test);
+//    var_dump(unserialize($test));
+//    var_dump($jsonUser);
+//    var_dump($arrUser);
+//    var_dump($objUser -> firstname);
+//    var_dump(serialize($objUser));
+//    die();
 
 //    var_dump($_FILES);
 //    die();
@@ -75,6 +78,29 @@ if (isset($_POST['is_agree'])) {
     if (!(in_array('html', $user['stack_learn']) && in_array('php', $user['stack_learn']))) {
         $errorMessage[] = 'Требуется html и php';
     }
+
+    if (empty($errorMessage)) {
+        try {
+            $db = new PDO('mysql: host=localhost; dbname=php2; charset=utf8;', 'root', 'root');
+            $db -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $result = $db->prepare("
+            INSERT INTO users (firstname, lastname, password, age, growth)
+            VALUES (:firstname, :lastname, :password, :age, :growth);
+        ");
+            $result->execute([
+                'firstname' => $user['firstname'],
+                'lastname' => $user['lastname'],
+                'password' => $user['password'],
+                'age' => $user['age'],
+                'growth' => $user['growth'],
+            ]);
+        } catch (PDOException $e) {
+            var_dump($e->getMessage());
+            die();
+        }
+
+    }
+
 }
 var_dump(getFullName($user));
 var_dump($user['stack_learn']);
