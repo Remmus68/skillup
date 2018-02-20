@@ -1,3 +1,14 @@
+<?php
+// Посмотреть как работает flock(), gdlid php
+$fileName='counter.txt';
+if (file_exists($fileName)) {
+    $counter = file_get_contents($fileName);
+} else {
+    $counter = 0;
+}
+ $counter++;
+ file_put_contents($fileName, $result);
+?>
 <html>
     <head>
         <title>MySQL</title>
@@ -59,5 +70,8 @@
                 <?php } ?>
             </tbody>
         </table>
+    <div class="counter">
+        <?=$counter?>
+    </div>
     </body>
 </html>
