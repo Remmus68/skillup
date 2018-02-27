@@ -1,13 +1,19 @@
 <?php
+
+//global $alerts;
+//$alerts = [];
+
+require_once 'include/functions.php';
+
+require_once 'model/User.php';
+
+//$a=1;
+//
+//var_dump($GLOBALS);
+//die;
 define ('UPLOAD_DIR', 'upload/');
-function createPath($path) {
-    $isSuccess = false;
-    if (!file_exists($path)) {
-        mkdir($path, 0777,true);
-        $isSuccess = true;
-    }
-    return $isSuccess;
-}
+$GLOBALS['alerts'] = [];
+$param = $_POST;
 //$arrResult = glob('*.txt');
 //foreach ($arrResult as $fileName) {
 //    var_dump(filesize($fileName));
@@ -34,26 +40,33 @@ function getFullName($user) {
 }
 
 
-$errorMessage=[];
 
-var_dump($_POST);
-var_dump($_GET);
-if (isset($_POST['is_agree'])) {
+//var_dump($param);
+//var_dump($_GET);
+if (isset($param['is_agree'])) {
 
 //    header('Location: ./path/to/route');
 
-    $user = [
-        'firstname' => $_POST['firstname'],
-        'lastname'=> $_POST['lastname'],
-        'sex' => $_POST['sex'],
-        'age' => (int)$_POST['age'],
-        'growth' => (float)$_POST['growth'],
-        'password' => $_POST['password'],
-        'stack_learn' => $_POST['stack_learn'],
-        'list_fruits' => 'яблоко, апельсин, груша',
-    ];
-    if (strlen($user['firstname']) < 3 || strlen($user['lastname']) < 3) {
-        $errorMessage[] = 'Error #1';
+    $user = new User;
+    $user->setFirstname($param['firstname']);
+    $user->setLastname($param['lastname']);
+    $user->setAge((int)$param['age']);
+    $user->setSex($param['sex']);
+    $user->setGrowth((float)$param['growth']);
+    $user->setPassword($param['password']);
+    $user->setStackLearn($param['stack_learn']);
+//    $user = [
+//        'firstname' => $param['firstname'],
+//        'lastname'=> $param['lastname'],
+//        'sex' => $param['sex'],
+//        'age' => (int)$param['age'],
+//        'growth' => (float)$param['growth'],
+//        'password' => $param['password'],
+//        'stack_learn' => $param['stack_learn'],
+//        'list_fruits' => 'яблоко, апельсин, груша',
+//    ];
+    if (!$user->isValidateFullName()) {
+       addAlertDanger('Слишком короткое имя или фамилия');
     }
 //    $jsonUser = json_encode($user, JSON_UNESCAPED_UNICODE);
 //    $arrUser = json_decode($jsonUser, true);
@@ -75,8 +88,8 @@ if (isset($_POST['is_agree'])) {
         move_uploaded_file($_FILES['foto']['tmp_name'], $uploadPath . $_FILES['foto']['name']);
     }
 
-    if (!(in_array('html', $user['stack_learn']) && in_array('php', $user['stack_learn']))) {
-        $errorMessage[] = 'Требуется html и php';
+    if (!(in_array('html', $user->getStackLearn()) && in_array('php', $user->getStackLearn()))) {
+        addAlertDanger('Требуется html и php');
     }
 
     if (empty($errorMessage)) {
@@ -88,11 +101,11 @@ if (isset($_POST['is_agree'])) {
             VALUES (:firstname, :lastname, :password, :age, :growth);
         ");
             $result->execute([
-                'firstname' => $user['firstname'],
-                'lastname' => $user['lastname'],
-                'password' => $user['password'],
-                'age' => $user['age'],
-                'growth' => $user['growth'],
+                'firstname' => $user->getFirstname(),
+                'lastname' => $user->getLastname(),
+                'password' => $user->getPassword(),
+                'age' => $user->getAge(),
+                'growth' => $user->getGrowth(),
             ]);
         } catch (PDOException $e) {
             var_dump($e->getMessage());
@@ -103,8 +116,6 @@ if (isset($_POST['is_agree'])) {
 
 }
 var_dump(getFullName($user));
-var_dump($user['stack_learn']);
-var_dump(in_array('html', $user['stack_learn']));
 $string = 'Hello world!';
 $result = substr($string, 6, 2);
 var_dump($result);
@@ -121,32 +132,32 @@ var_dump($result);
 </head>
 <body>
 
-<?php if ($errorMessage) {?>
+<?php if ($GLOBALS['alerts']) {?>
 <div class="alert alert-danger" role="alert">
     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
     <span class="sr-only">Error:</span>
-    <?php foreach($errorMessage as $message) {
+    <?php foreach($GLOBALS['alerts'] as $message) {
             echo $message;
         }
      } ?>
 </div>
 
-<?php if(isset($user['list_fruits'])) {?>
+<?php if(isset($user)) {?>
 <h3>Мы едим:</h3>
 
 <ul>
-    <?php foreach (explode(', ' , $user['list_fruits']) as $key => $lang ) { ?>
+    <?php foreach (explode(', ' , $user->getFruits()) as $key => $lang ) { ?>
         <li><?= $lang ?></li>
     <?php } ?>
 </ul>
-<h3>Мы изучаем: <?= implode(', ' , $user['stack_learn']) ?></h3>
+<h3>Мы изучаем: <?= implode(', ' , $user->getFruits()) ?></h3>
 <?php } ?>
 
 <div class="container-fluid jumbotron col-md-offset-4 col-md-5">
     <form action="" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="firstname">Имя</label>
-            <input class="form-control" id="firstname" name="firstname" placeholder="Имя" value="<?= isset($_POST['name']) ? $_POST['name'] : '' ?>" required>
+            <input class="form-control" id="firstname" name="firstname" placeholder="Имя" value="<?= isset($param['name']) ? $param['name'] : '' ?>" required>
         </div>
         <div class="form-group">
             <label for="lastname">Фамилия</label>
