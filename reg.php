@@ -7,6 +7,9 @@ require_once 'include/functions.php';
 
 require_once 'model/User.php';
 
+var_dump(User::getSalt());
+die();
+
 //$a=1;
 //
 //var_dump($GLOBALS);

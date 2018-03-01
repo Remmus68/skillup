@@ -95,28 +95,43 @@
          return $this->sex;
      }
 
+     /**
+      * @return bool
+      */
      public function isValidateFullName()
      {
          return
-             strlen($user['firstname']) >= 3 &&
-             strlen($user['lastname']) >= 3;
+             strlen($this->firstname) >= 3 &&
+             strlen($this->lastname) >= 3;
      }
 
+     /**
+      * @param $stackLearn
+      */
      public function setStackLearn($stackLearn)
      {
          $this->stackLearn = $stackLearn;
      }
 
+     /**
+      * @param $age
+      */
      public function setAge($age)
      {
          $this->age = $age;
      }
 
+     /**
+      * @param $fruits
+      */
      public function setFruits($fruits)
      {
          $this->fruits = $fruits;
      }
 
+     /**
+      * @param $growth
+      */
      public function setGrowth($growth)
      {
          $this->growth = $growth;
@@ -130,5 +145,11 @@
      public function setSex($sex)
      {
          $this->sex = $sex;
+     }
+
+     public static $salt='FykJi7t@-*gvc';
+
+     public static function getSalt() {
+         return self::$salt;
      }
  }
