@@ -19,7 +19,7 @@ a.hashtag, a.hashtag:visited {
 	overflow: hidden;
 }
 
-.header .logotip {
+.header #logotip {
 	float: left;
 	margin: 5px 0 0 8px;
 }
@@ -116,6 +116,10 @@ a.hashtag, a.hashtag:visited {
 	color: #b1b0b8;
 }
 
+.content .post .foto {
+	min-height: 150px;
+}
+
 .content .post .foto img {
 	display: block;
 	max-width: 670px;
@@ -127,8 +131,13 @@ a.hashtag, a.hashtag:visited {
 }
 
 .content .post .post_info .like {
+	cursor: pointer;
 	font-weight: bold;
 	color: #80828f;
+}
+
+.content .post .post_info .liked {
+	color: #fe0000;
 }
 
 .content .post .post_info .like img {

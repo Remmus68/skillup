@@ -41,7 +41,7 @@
     <div class="post_info">
         <div class="like">
         <img src="image/heart.png">
-            <?=$post['likes']?>
+            <span class="count"><?=$post['likes']?></span>
         </div>
         <div class="comment">
             <?php

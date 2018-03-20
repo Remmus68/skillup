@@ -1,5 +1,7 @@
 <?php
 // Посмотреть как работает flock(), gdlid php
+require_once 'DB.php';
+require_once 'model/User.php';
 $fileName='counter.txt';
 if (file_exists($fileName)) {
     $counter = file_get_contents($fileName);
@@ -7,7 +9,7 @@ if (file_exists($fileName)) {
     $counter = 0;
 }
  $counter++;
- file_put_contents($fileName, $result);
+ file_put_contents($fileName, $counter);
 ?>
 <html>
     <head>
@@ -36,9 +38,17 @@ if (file_exists($fileName)) {
     </head>
     <?php
 
-     $db = new PDO('mysql: host=localhost; dbname=php2; charset=utf8;', 'root', 'root');
-        $result = $db -> query('SELECT * FROM users WHERE age>=18;');
-        $users = $result -> fetchAll();
+     $db = DB::getInstance();
+     $user = new User();
+     $db->execute('
+            INSERT INTO users (firstname, lastname, password, age, growth)
+            VALUES (:firstname, :lastname, :password, :age, :growth);', [
+         'firstname' => $user->getFirstname(),
+         'lastname' => $user->getLastname(),
+         'password' => $user->getPassword(),
+         'age' => $user->getAge(),
+         'growth' => $user->getGrowth(),
+     ]);
     ?>
     <body>
         <table>

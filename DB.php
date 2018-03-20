@@ -6,17 +6,25 @@ class DB {
 
  private $db;
 
- public function __construct()
- {
+ public static $instance;
+
+ private function __construct() {
      $config = Config::$db;
      $this->db = new PDO(
          $config['dsn'],
          $config['username'],
          $config['password']
- );
+        );
      if ($config['errors']) {
          $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      }
+ }
+
+ public static function getInstance() {
+     if (is_null(self::$instance)) {
+        self::$instance = new self();
+     }
+     return self::$instance;
  }
 
  public function execute($sql, $param) {

@@ -7,11 +7,13 @@
 	<head>
 	    <title><?= $pageTitle . ' | ' .PROJECT_NAME ?></title>
         <link rel="stylesheet" href="css/style.css?<?= filemtime('css/style.css') ?>" data-date="<?= date('d.m.Y H:i:s', filemtime('css/style.css')) ?>">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="include/script.js?<?=filemtime('include/script.js')?>"></script>
 	</head>
 	<body>
 	    <div class="container">
 			<div class="header">
-			    <div class="logotip">
+			    <div id="logotip">
 			    	<a href="../skillup/posts.php">
 			        	<img src="image/logo.png" />
 			    	</a>
