@@ -1,0 +1,148 @@
+body {
+	margin: 0;
+	color: #421616;
+	font-size: 14px;
+	font-family: Calibri, sans-serif;
+	background-color: #ffeeee;
+}
+
+a {
+	color: inherit;
+}
+
+.info_block_default {
+	padding: 10px 15px;
+	border: 1px solid #80828f;
+	background-color: #ffffff;
+}
+
+.center {
+	min-width: 880px;
+	max-width: 1020px;
+	margin: 0 auto;
+}
+
+.header {
+	background-color: #ea6485;
+}
+
+.header .center {
+	height: 50px;
+}
+
+.header .logo {
+	float: left;
+	display: block;
+	margin: 10px 0;
+	max-height: 30px;
+}
+
+.header .username{
+	float: right;
+	margin: 16px 0 16px 10px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+.header .userpic{
+	float: right;
+	display: block;
+	margin: 4px 0;
+}
+
+
+
+.content {
+	margin: 30px 0;	
+}
+
+.content .posts {
+	width: 67%;
+}
+
+.content .post {
+	width: 100%;
+	margin: 0 0 35px 0;
+}
+
+.content .post:last-child {
+	margin: 0;
+}
+
+.content .post .user_info {
+	min-height: 50px;
+}
+
+.content .post .user_info img {
+	display: block;
+	float: left;
+	border-radius: 20px;
+	margin: 0 15px 0 0;
+}
+
+.content .post .user_info .name {
+	font-size: 18px;
+	font-weight: bold;
+	color: #313036;
+}
+
+.content .post .user_info .created_at {
+	color: #b1b0b8;
+}
+
+.content .post .foto img {
+	display: block;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.content .post .post_info {
+	padding: 15px 0 0 0;
+}
+
+.content .post .post_info .like {
+	font-weight: bold;
+	color: #80828f;
+}
+
+.content .post .post_info .like img {
+	height: 12px;
+	padding: 0 2px 0 0;
+}
+
+.content .post .post_info .comment {
+	color: #313036;
+}
+
+.content .post .post_info .hashtag {
+	color: #421616;
+}
+
+.content .sidebar {
+	float: right;
+	width: 28%;
+}
+
+#regform h1 {
+	font-size: 18px;
+	margin: 5px 0;
+	text-align: center;
+}
+
+#regform form {
+	width: 100%;
+}
+
+#regform .field {
+	margin: 0 0 10px 0;
+	text-align: center;
+}
+
+#regform .field:last-child {
+	margin: 0;
+}
+
+#regform input {
+	width: 86%;
+	padding: 5px 7%;
+}

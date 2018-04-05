@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Red eyes
+	</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<div class="header">
+		<div class="center">
+			<img class="logo" src="logo.png" alt="LOGO RED EYES" />
+			<p class="username">Anonimous</p>
+			<img class ="userpic"src="anonimous.jpg" alt="Аноним">
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="center">
+			<div class="sidebar">
+				<div id="regform" class="info_block_default">
+					<h1>Авторизация</h1>
+					<form method="POST">
+						<div class="field">
+							<input type="text" name="login" placeholder="Логин">
+						</div>
+						<div class="field">
+							<input type="text" name="pass" placeholder="Пароль">
+						</div>
+						<div class="field">
+							<button type="submit">Войти</button>
+						</div>
+						<div class="field">
+							<a href="#">Регистрация</a>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="posts">
+				<div class="post info_block_default">
+				    <div class="user_info">
+				        <img src="female-user.jpg">
+				        <div class="name">Екатерина Захарова</div>
+				        <div class="created_at">Добавлено 2 часа назад</div>
+				    </div>
+				    <div class="foto">
+				        <img src="post1.jpg">
+				    </div>
+				    <div class="post_info">
+				        <div class="like">
+				        <img src="heart.png">
+				        <span class="count">125</span>
+				        </div>
+				        <div class="comment">
+				        	Теперь я тоже жду ебилдов. 
+				        	<a href="?hashtag=gentoo" class="hashtag">#gentoo</a>
+				        	<a href="?hashtag=dwm" class="hashtag">#dwm</a>
+				        </div>
+				    </div>
+				</div>
+			</div>
+		</div>		
+	</div>
+<!-- 
+<script>
+function fresh() {
+    location.reload();
+}
+setInterval("fresh()",5000);
+</script> -->
+</body>
+</html>
